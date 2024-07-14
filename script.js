@@ -6,11 +6,11 @@ const liveChart = new Chart(ctx, {
         labels: [],
         datasets: [{
             label: 'Live Data',
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgba(54, 162, 235, 1)',
+            backgroundColor: 'rgba(93, 135, 125, 0.5)',
+            borderColor: 'rgba(93, 135, 125, 1)',
             borderWidth: 1,
             data: [],
-            fill: false
+            fill: 'origin' // Fill area below the line
         }]
     },
     options: {
@@ -18,11 +18,38 @@ const liveChart = new Chart(ctx, {
         scales: {
             x: {
                 type: 'linear',
-                position: 'bottom'
+                position: 'bottom',
+                min: 0,
+                max: 15,
+                grid: {
+                    display: false // Hide x-axis grid lines
+                },
+                ticks: {
+                    display: false // Hide x-axis ticks
+                }
             },
             y: {
                 suggestedMin: 0,
-                suggestedMax: 100
+                suggestedMax: 100,
+                grid: {
+                    display: false // Hide y-axis grid lines
+                },
+                ticks: {
+                    display: false // Hide y-axis ticks
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                display: false // Hide legend
+            }
+        },
+        elements: {
+            point: {
+                radius: 0 // Hide points
+            },
+            line: {
+                tension: 0.1 // Smoother line
             }
         }
     }
@@ -45,6 +72,13 @@ function updateChart() {
 
     liveChart.data.labels.push(xValue);
     liveChart.data.datasets[0].data.push(yValue);
+
+    // Remove old data if it exceeds 15 seconds
+    if (elapsedSeconds > 15) {
+        liveChart.data.labels.shift();
+        liveChart.data.datasets[0].data.shift();
+    }
+
     liveChart.update();
 }
 

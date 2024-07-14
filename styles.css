@@ -2,13 +2,17 @@ body {
     font-family: Arial, sans-serif;
     padding: 20px;
     text-align: center;
+    background-color: #f0f0f0; /* Set background color */
 }
 
 .graph-container {
     width: 80%;
     margin: 20px auto;
+    border: none; /* Remove border */
 }
 
 canvas {
-    background-color: #f0f0f0;
+    background-color: transparent !important; /* Set canvas background to transparent */
+    border: none; /* Remove border */
+    outline: none; /* Remove outline */
 }
